@@ -66,7 +66,7 @@ public class ItemView extends JPanel {
         //Image network = getImage("internet.png");
        //g.drawImage(network,x,y,null);
 
-        y+=40;
+        y+=20;
         g.drawString("[View on Web Page]", x, y);
         y += 20;
         g.drawString("Name: " +item.getName(), x, y);

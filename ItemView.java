@@ -1,5 +1,7 @@
 package pricewatcher_homework2.view;
 
+import pricewatcher_homework2.model.Item;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import package.model.Item;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
@@ -50,8 +51,7 @@ public class ItemView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //Dimension dim = getSize();
-
+        //Dimension dim = getSize();g
         //--
         //-- WRITE YOUR CODE HERE!
         //--
@@ -70,7 +70,8 @@ public class ItemView extends JPanel {
 
         g.drawString("Price: ", x, y);
         y += 20;
-
+        g.drawString("Change: ",x,y);
+        y+=20;
         g.drawString("Added: ", x, y);
         y = 55;
         x = 80;
@@ -81,12 +82,15 @@ public class ItemView extends JPanel {
         y += 20;
         g.setColor(Color.BLUE);
         g.drawString(item.printCurrentPrice(),x,y);
+        y+=20;
+        g.setColor(Color.GREEN);
+        g.drawString(item.getPriceChange(),x,y);
+        y+=20;
         g.setColor(Color.BLACK);
-        y += 20;
-        g.drawString(item.getDateAdded(),x,y);
+        g.drawString(item.getDateAdded()+item.getStartingPrice(),x,y);
         y+= 30;
-        String image = ("C:/Users/Elijah Pele/Desktop/rabbit.jpeg");
-        g.drawImage(getImage(image), 40, 60, null);
+        //String image = ("C:/Users/Elijah Pele/Desktop/rabbit.jpeg");
+        //g.drawImage(getImage(image), 40, 60, null);
 
     }
 
@@ -109,3 +113,4 @@ public class ItemView extends JPanel {
         return null;
     }
 }
+

@@ -1,2 +1,2 @@
-# PriceWatcher_Homework2
-Second Part to Price Watcher App.
+# PriceWatcher 
+Price Watcher App was implemented using 2D graphics. 

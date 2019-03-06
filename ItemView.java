@@ -1,20 +1,13 @@
-package pricewatcher_homework2;
+package pricewatcher_homework2.view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-
-import java.lang.Object;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
+import package.model.Item;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
@@ -63,20 +56,37 @@ public class ItemView extends JPanel {
         //-- WRITE YOUR CODE HERE!
         //--
         int x = 20, y = 30;
-        //Image network = getImage("internet.png");
-       //g.drawImage(network,x,y,null);
 
-        y+=40;
+        Font boldFont = new Font("Helevetica", Font.BOLD, 12);
+        Font regFont = new Font("Helvetica", Font.PLAIN, 12);
+        g.setFont(boldFont);
+
         g.drawString("[View on Web Page]", x, y);
+        y += 25;
+        g.drawString("Name: ", x, y);
         y += 20;
-        g.drawString("Name: " +item.getName(), x, y);
+        g.drawString("URL: ", x, y);
         y += 20;
-        g.drawString("URL: " +item.getURL(), x, y);
+
+        g.drawString("Price: ", x, y);
         y += 20;
-        g.drawString("Price: " +item.getCurrentPrice(), x, y);
+
+        g.drawString("Added: ", x, y);
+        y = 55;
+        x = 80;
+        g.setFont(regFont);
+        g.drawString(item.getName(),x,y);
         y += 20;
-        g.drawString("Added: " +item.getDateAdded(), x, y);
+        g.drawString(item.printURL(),x,y);
         y += 20;
+        g.setColor(Color.BLUE);
+        g.drawString(item.printCurrentPrice(),x,y);
+        g.setColor(Color.BLACK);
+        y += 20;
+        g.drawString(item.getDateAdded(),x,y);
+        y+= 30;
+        String image = ("C:/Users/Elijah Pele/Desktop/rabbit.jpeg");
+        g.drawImage(getImage(image), 40, 60, null);
 
     }
 

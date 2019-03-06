@@ -1,5 +1,6 @@
-package pricewatcher_homework2.view;
-
+package pricewatcher_homework2;
+import pricewatcher_homework2.model.Item;
+import pricewatcher_homework2.view.ItemView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -47,8 +48,8 @@ public class Main extends JFrame {
     private void refreshButtonClicked(ActionEvent event) {
         //PriceFinder(
         //-- WRITE YOUR CODE HERE!
-        //--
-        showMessage("Refresh clicked!");
+       String newPrice=Double.toString(item.checkLivePrice()); //--
+        showMessage("Current price: " +item.printCurrentPrice());
     }
 
     /** Callback to be invoked when the view-page icon is clicked.
@@ -114,3 +115,5 @@ public class Main extends JFrame {
     }
 
 }
+
+

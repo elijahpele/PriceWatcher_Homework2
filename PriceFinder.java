@@ -1,8 +1,14 @@
 package pricewatcher_homework2.control;
+import pricewatcher_homework2.model.Item;
 
 import java.util.Random;
 
 public class PriceFinder {
+    private Item item;
+    public PriceFinder(){}
+    public  PriceFinder(Item item){
+        this.item = item;
+    }
 
     public double livePrice(String url) {
         Random random = new Random();

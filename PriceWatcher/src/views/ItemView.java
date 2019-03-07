@@ -1,4 +1,5 @@
 package views;
+
 import models.Item;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,100 +13,98 @@ import java.net.URL;
 
 @SuppressWarnings("serial")
 public class ItemView extends JPanel {
-    private Item item = new Item();
+	private Item item = new Item();
+
+	/** Interface to notify a click on the view page icon. */
+	public interface ClickListener {
+
+		/** Callback to be invoked when the view page icon is clicked. */
+		void clicked();
+	}
+
+	/** Directory for image files: src/image in Eclipse. */
+	private final static String IMAGE_DIR = "/images/";
+	//private final static String SOUND_DIR = "/sounds/cashregister.wav";
+	/** View-page clicking listener. */
+	private ClickListener listener;
+
+	/** Create a new instance. */
+	public ItemView() {
+		setPreferredSize(new Dimension(150, 180));
+		setBackground(Color.WHITE);
+		addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				if (isViewPageClicked(e.getX(), e.getY()) && listener != null) {
+					listener.clicked();
+				}
+			}
+		});
+	}
 
 
-    /** Interface to notify a click on the view page icon. */
-    public interface ClickListener {
 
-        /** Callback to be invoked when the view page icon is clicked. */
-        void clicked();
-    }
+	/** Set the view-page click listener. */
+	public void setClickListener(ClickListener listener) {
+		this.listener = listener;
+	}
 
-    /** Directory for image files: src/image in Eclipse. */
-    private final static String IMAGE_DIR = "/image/";
+	/** Overridden here to display the details of the item. */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 
-    /** View-page clicking listener. */
-    private ClickListener listener;
+		int x = 30, y = 30;
 
-    /** Create a new instance. */
-    public ItemView() {
-        setPreferredSize(new Dimension(100, 160));
-        setBackground(Color.WHITE);
-        addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (isViewPageClicked(e.getX(), e.getY()) && listener != null) {
-                    listener.clicked();
-                }
-            }
-        });
-    }
+		Font boldFont = new Font("Helevetica", Font.BOLD, 12);
+		Font regFont = new Font("Helevetica", Font.ITALIC, 12);
 
-    /** Set the view-page click listener. */
-    public void setClickListener(ClickListener listener) {
-        this.listener = listener;
-    }
+		g.drawImage(getImage("Beats.jpg"), 137, 19, this);
+		y += 130;
+		g.setFont(boldFont);
+		g.drawString("Name:   ", x, y);
+		y += 20;
+		g.drawString("URL:      ", x, y);
+		y += 20;
 
-    /** Overridden here to display the details of the item. */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        //Dimension dim = getSize();
+		g.drawString("Price:    ", x, y);
+		y += 20;
+		g.drawString("Change:   ", x, y);
+		y += 20;
+		g.drawString("Added:    ", x, y);
+		y = 161;
+		x = 90;
+		g.setFont(regFont);
+		g.drawString(item.getName(), x, y);
+		y += 20;
+		g.drawString(item.printURL(), x, y);
+		y += 20;
+		g.setColor(Color.BLUE);
+		g.drawString(item.printCurrentPrice(), x, y);
+		y += 20;
+		g.setColor(Color.GREEN);
+		g.drawString(item.getPriceChange(), x, y);
+		y += 20;
+		g.setColor(Color.BLACK);
+		g.drawString(item.getDateAdded(), x, y);
+		y += 30;
 
-        //--
-        //-- WRITE YOUR CODE HERE!
-        //--
-        int x = 20, y = 30;
+	}
 
-        Font boldFont = new Font("Helevetica", Font.BOLD, 12);
-        Font regFont = new Font("Helvetica", Font.PLAIN, 12);
-        g.setFont(boldFont);
+	/** Return true if the given screen coordinate is inside the viewPage icon. */
+	private boolean isViewPageClicked(int x, int y) {
 
-        g.drawString("[View on Web Page]", x, y);
-        y += 25;
-        g.drawString("Name: ", x, y);
-        y += 20;
-        g.drawString("URL: ", x, y);
-        y += 20;
+		return new Rectangle(180, 60, 180, 70).contains(x, y);
+	}
 
-        g.drawString("Price: ", x, y);
-        y += 20;
-
-        g.drawString("Added: ", x, y);
-        y = 55;
-        x = 80;
-        g.setFont(regFont);
-        g.drawString(item.getName(),x,y);
-        y += 20;
-        g.drawString(item.printURL(),x,y);
-        y += 20;
-        g.setColor(Color.BLUE);
-        g.drawString(item.printCurrentPrice(),x,y);
-        g.setColor(Color.BLACK);
-        y += 20;
-        g.drawString(item.getDateAdded(),x,y);
-        y+= 30;
-        String image = ("C:/Users/Elijah Pele/Desktop/rabbit.jpeg");
-        g.drawImage(getImage(image), 40, 60, null);
-
-    }
-
-    /** Return true if the given screen coordinate is inside the viewPage icon. */
-    private boolean isViewPageClicked(int x, int y) {
-        //--
-        //-- WRITE YOUR CODE HERE
-        //--
-        return new Rectangle(20, 20, 30, 20).contains(x,  y);
-    }
-
-    /** Return the image stored in the given file. */
-    public Image getImage(String file) {
-        try {
-            URL url = new URL(getClass().getResource(IMAGE_DIR), file);
-            return ImageIO.read(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	/** Return the image stored in the given file. */
+	public Image getImage(String file) {
+		try {
+			URL url = new URL(getClass().getResource(IMAGE_DIR), file);
+			return ImageIO.read(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

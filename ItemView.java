@@ -1,5 +1,7 @@
 package pricewatcher_homework2.view;
 
+import pricewatcher_homework2.model.Item;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import package.model.Item;
 /** A special panel to display the detail of an item. */
 
 @SuppressWarnings("serial")
@@ -29,7 +30,8 @@ public class ItemView extends JPanel {
     private ClickListener listener;
 
     /** Create a new instance. */
-    public ItemView() {
+    public ItemView(Item item) {
+        this.item = item;
         setPreferredSize(new Dimension(100, 160));
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
@@ -50,27 +52,22 @@ public class ItemView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //Dimension dim = getSize();
 
-        //--
-        //-- WRITE YOUR CODE HERE!
-        //--
         int x = 20, y = 30;
-
         Font boldFont = new Font("Helevetica", Font.BOLD, 12);
         Font regFont = new Font("Helvetica", Font.PLAIN, 12);
-        g.setFont(boldFont);
 
+        g.setFont(boldFont);
         g.drawString("[View on Web Page]", x, y);
         y += 25;
         g.drawString("Name: ", x, y);
         y += 20;
         g.drawString("URL: ", x, y);
         y += 20;
-
         g.drawString("Price: ", x, y);
         y += 20;
-
+        g.drawString("Change: ",x,y);
+        y+=20;
         g.drawString("Added: ", x, y);
         y = 55;
         x = 80;
@@ -81,13 +78,16 @@ public class ItemView extends JPanel {
         y += 20;
         g.setColor(Color.BLUE);
         g.drawString(item.printCurrentPrice(),x,y);
+        y+=20;
         g.setColor(Color.BLACK);
-        y += 20;
-        g.drawString(item.getDateAdded(),x,y);
+        if(item.getCurrentPrice() < item.getPreviousPrice()){
+            g.setColor(Color.GREEN);
+        }
+        g.drawString(item.getPriceChange(),x,y);
+        y+=20;
+        g.setColor(Color.BLACK);
+        g.drawString(item.getDateAdded()+item.getStartingPrice(),x,y);
         y+= 30;
-        String image = ("C:/Users/Elijah Pele/Desktop/rabbit.jpeg");
-        g.drawImage(getImage(image), 40, 60, null);
-
     }
 
     /** Return true if the given screen coordinate is inside the viewPage icon. */

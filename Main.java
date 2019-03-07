@@ -1,5 +1,6 @@
-package pricewatcher_homework2.view;
-
+package pricewatcher_homework2;
+import pricewatcher_homework2.model.Item;
+import pricewatcher_homework2.view.ItemView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,10 +46,9 @@ public class Main extends JFrame {
      * Find the current price of the watched item and display it
      * along with a percentage price change. */
     private void refreshButtonClicked(ActionEvent event) {
-        //PriceFinder(
-        //-- WRITE YOUR CODE HERE!
-        //--
-        showMessage("Refresh clicked!");
+        repaint();
+        String newPrice=Double.toString(item.checkLivePrice()); //--
+        showMessage("Current price: " +item.printCurrentPrice());
     }
 
     /** Callback to be invoked when the view-page icon is clicked.
@@ -62,7 +62,6 @@ public class Main extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         showMessage("item.");
     }
 
@@ -77,7 +76,7 @@ public class Main extends JFrame {
                 BorderFactory.createEmptyBorder(10,16,0,16),
                 BorderFactory.createLineBorder(Color.GRAY)));
         board.setLayout(new GridLayout(1,1));
-        itemView = new ItemView();
+        itemView = new ItemView(item);
         itemView.setClickListener(this::viewPageClicked);
         board.add(itemView);
         add(board, BorderLayout.CENTER);

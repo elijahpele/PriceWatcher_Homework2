@@ -1,18 +1,19 @@
 package models;
 
+import controllers.PriceFinder;
+
 public class Item {
-    String name = "Beats Studio 3 Wireless Over-Ear Headphones";
-    String url = "https://www.amazon.com/Beats-Solo3-Wireless-Ear-Headphones/dp/B01LWWY3E2/ref=sr_1_1_sspa?s=aht&ie=UTF8&qid=1549336080&sr=1-1-spons&keywords=beats+wireless+headphones&psc=1";
-    String dateAdded = "06/01/2018";
-    double priceChange = 0;
-    double startingPrice = 279.95;
-    double previousPrice;
-    double currentPrice = 279.95;
+    private String name = "Beats Studio 3 Wireless Over-Ear Headphones";
+    private String url = "https://www.amazon.com/Beats-Solo3-Wireless-Ear-Headphones/dp/B01LWWY3E2/ref=sr_1_1_sspa?s=aht&ie=UTF8&qid=1549336080&sr=1-1-spons&keywords=beats+wireless+headphones&psc=1";
+    private String dateAdded = "06/01/2018";
+    private double priceChange = 0;
+    private double startingPrice = 279.95;
+    private double previousPrice;
+    private double currentPrice = 279.95;
 
     public String getName(){
         return this.name;
     }
-
     public String getURL(){
         return this.url;
     }
@@ -23,15 +24,21 @@ public class Item {
     }
 
     public String getDateAdded(){
-        return dateAdded;
+        return this.dateAdded;
     }
 
-    public double getStartingPrice(){
-        return this.startingPrice;
+    public String getStartingPrice(){
+        String startPrice = Double.toString(this.startingPrice);
+        return "($"+startPrice +")";
     }
 
-    public double getPriceChange(){
-        return this.priceChange;
+    public String getPriceChange(){
+        String change = Double.toString(this.priceChange);
+        return change +"%";
+    }
+
+    public double getPreviousPrice(){
+        return this.previousPrice;
     }
 
     public double getCurrentPrice(){
@@ -39,10 +46,20 @@ public class Item {
             return this.startingPrice;
         return this.currentPrice;
     }
+
     public String printCurrentPrice(){
         String currPrice = Double.toString(this.currentPrice);
         currPrice = "$" +currPrice;
         return currPrice;
+    }
+
+    public double checkLivePrice(){
+        PriceFinder priceFinder = new PriceFinder();
+        double newPrice = priceFinder.livePrice(this.url);
+        this.previousPrice = currentPrice;
+        this.currentPrice = newPrice;
+        setPriceChange();
+        return this.currentPrice;
     }
 
     public void setPriceChange(){

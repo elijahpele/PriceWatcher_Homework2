@@ -1,4 +1,5 @@
 package views;
+
 import models.Item;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class Main extends JFrame {
 	private Item item = new Item();
 
 	/** Default dimension of the dialog. */
-	private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
+	private final static Dimension DEFAULT_SIZE = new Dimension(406, 390);
 
 	/** Special panel to display the watched item. */
 	private ItemView itemView;
@@ -47,27 +48,25 @@ public class Main extends JFrame {
 	 * change.
 	 */
 	private void refreshButtonClicked(ActionEvent event) {
-		// PriceFinder(
-		// -- WRITE YOUR CODE HERE!
-		// --
-		showMessage("Refresh clicked!");
+		repaint();
+		String newPrice = Double.toString(item.checkLivePrice()); // --
+		showMessage("Current price: " + item.printCurrentPrice());
 	}
 
 	/**
 	 * Callback to be invoked when the view-page icon is clicked. Launch a (default)
 	 * web browser by supplying the URL of the item.
 	 */
-	private void viewPageClicked() {
-		try {
-			Desktop desktop = Desktop.getDesktop();
-			URI oURL = new URI(item.getURL());
-			desktop.browse(oURL);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		showMessage("item.");
-	}
+    private void viewPageClicked() {
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            URI oURL = new URI(item.getURL());
+            desktop.browse(oURL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        showMessage("item.");
+    }
 
 	/** Configure UI. */
 	private void configureUI() {
@@ -112,6 +111,6 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) {
-        new Main();
-    }
+		new Main();
+	}
 }
